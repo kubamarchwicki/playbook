@@ -8,3 +8,5 @@
     - name: Gather the package facts
       package_facts:
         manager: apt
+  roles:
+    - i3wm
