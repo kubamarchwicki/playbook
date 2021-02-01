@@ -10,3 +10,4 @@
         manager: apt
   roles:
     - i3wm
+    - basic-tools
