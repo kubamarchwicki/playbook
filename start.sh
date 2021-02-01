@@ -2,7 +2,7 @@
 
 set -e
 
-REPOSITORY="git@github.com:kubamarchwicki/playbook.git"
+REPOSITORY="https://github.com/kubamarchwicki/playbook.git"
 TARGET="$(pwd)"
 
 RED=""
