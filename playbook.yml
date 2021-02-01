@@ -11,3 +11,4 @@
   roles:
     - i3wm
     - basic-tools
+    - basic-ui-tools
