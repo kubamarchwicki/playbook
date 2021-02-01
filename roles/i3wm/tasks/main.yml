@@ -1,6 +1,0 @@
-- name: i3 environment
-  become: yes
-  apt:
-    state: latest
-    name:
-    - i3wm

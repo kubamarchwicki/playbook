@@ -1,0 +1,17 @@
+- name: Install basic tools
+  become: yes
+  apt:
+    state: latest
+    name:
+    - curl
+    - jq
+    - htop
+    - mc
+    - tmux
+    - zip
+    - sudo
+    - bat
+    - youtube-dl
+    - screen
+    - vim
+    - pass
