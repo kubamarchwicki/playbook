@@ -1,3 +1,11 @@
+- name: Install ui-stuff tools
+  become: yes
+  apt:
+    state: latest
+    name:
+    - firefox
+    - chromium-browser
+    
 - name: Install simplenote client
   apt:
     deb: https://github.com/Automattic/simplenote-electron/releases/download/v2.5.0/Simplenote-linux-2.5.0-amd64.deb
