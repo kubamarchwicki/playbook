@@ -16,3 +16,10 @@
     - vim
     - pass
     - eog
+    - tilda
+
+- name: Link tilda config
+  file:
+    src: "~/dotfiles/tilda"
+    dest: "~/.config/tilda/config_0"
+    state: link
