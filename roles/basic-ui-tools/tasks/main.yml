@@ -6,7 +6,16 @@
     - firefox
     - chromium-browser
 
-- name: Install simplenote client
-  apt:
-    deb: https://github.com/Automattic/simplenote-electron/releases/download/v2.5.0/Simplenote-linux-2.5.0-amd64.deb
-  become: yes
+- name: Install simplenote
+  block: 
+  - name: Verify if simplenote Is Installed
+    stat:
+      path: "/usr/bin/simplenote"
+    register: "simplenote_installed"
+  
+  - name: Install simplenote
+    apt:
+      deb: https://github.com/Automattic/simplenote-electron/releases/download/v2.5.0/Simplenote-linux-2.5.0-amd64.deb
+    become: yes
+    when: not simplenote_installed.stat.exists
+

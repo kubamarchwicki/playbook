@@ -1,0 +1,19 @@
+- name: Install oh-my-zsh
+  block: 
+- name: Verify if oh-my-zsh Is Installed
+  stat:
+    path: "~/.oh-my-zsh/"
+  register: "ohmyzsh_installed"
+
+  - name: Install SDKMAN
+    shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    args:
+      executable: /bin/bash
+      warn: no
+    when: not ohmyzsh_installed.stat.exists
+
+  - name: Default to zsh
+    user:
+      name: "{{ ansible_env.USER }}"
+      shell: /usr/bin/zsh
+    become: yes
