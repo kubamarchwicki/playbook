@@ -9,15 +9,22 @@
     - gnome-screenshot
     - flameshot
     
-- name: Copy i3 scripts
-  copy:
-    src: "roles/i3/files/scripts"
-    dest: "~/.i3/"
-
-- name: Copy i3 configurations
-  copy:
-    src: "{{ item.src }}"
-    dest: "{{ item.dest }}"
-  loop: 
-     - { src: "roles/i3/files/configs/config", dest: "~/.config/i3/config"}
-     - { src: "roles/i3/files/configs/.i3status.conf", dest: "~/.i3status.conf"}
+- name: Configure i3
+  block:
+  - name: Copy i3 scripts
+    copy:
+      src: "roles/i3/files/scripts"
+      dest: "~/.config/i3/"
+  - name: Set scripts permissions
+    file:
+      path: "~/.config/i3/scripts"
+      state: directory
+      recurse: yes
+      mode: 0755
+  - name: Copy i3 configurations
+    copy:
+      src: "{{ item.src }}"
+      dest: "{{ item.dest }}"
+    loop: 
+      - { src: "roles/i3/files/configs/config", dest: "~/.config/i3/config"}
+      - { src: "roles/i3/files/configs/.i3status.conf", dest: "~/.i3status.conf"}

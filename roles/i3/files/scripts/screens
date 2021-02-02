@@ -7,19 +7,19 @@ SCR_EXT="DP-1"
 SCR_INT="eDP-1"
 
 screen_mirror() {
-  xrandr --output $SCR_EXT --scale-from 3200x1800 --same-as $SCR_INT
+  xrandr --output $SCR_INT --auto --scale 2x2 --output $SCR_EXT
 }
 
 screen_join() {
-  xrandr --output $SCR_EXT --primary --auto --output $SCR_INT --left-of $SCR_EXT --auto
+  xrandr --output $SCR_INT --auto --left-of $SCR_EXT --output $SCR_EXT --primary --auto 
 }
 
 screen_external() {
-  xrandr --output $SCR_EXT --auto --output $SCR_INT --off
+  xrandr --output $SCR_INT --off --output $SCR_EXT --auto --scale 1x1
 }
 
 screen_internal() {
-  xrandr --output $SCR_EXT --off --output $SCR_INT --auto
+  xrandr --output $SCR_INT --auto --scale 2x2 --output $SCR_EXT --off 
 }
 
 main() {
@@ -27,7 +27,7 @@ main() {
     "external")
     screen_external
     ;;
-    "internal")
+    "internal" | "built-in")
     screen_internal
     ;;
     "mirror")
@@ -44,7 +44,7 @@ main() {
 }
 
 if [ $# -ne 1 ]; then
-  echo "Usage: screens.sh {internal|external|mirror|join}"
+  echo "Usage: screens {internal|external|mirror|join}"
   exit 1
 fi
 

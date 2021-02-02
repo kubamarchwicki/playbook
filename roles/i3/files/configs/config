@@ -41,7 +41,7 @@ bindsym $mod+Shift+q kill
 #bindsym $mod+d exec dmenu_run
 bindsym $mod+d exec "rofi -combi-modi window,drun -modi 'combi,run,ssh' -show combi -sidebar-mode -width 100 -location 2 -font 'Inconsolata 20' -color-window '#2E3436, #333333, #5f676a' -color-normal '#2E3436, #888888, #2E3436, #285577, #fff'"
 #bindsym $mod+d exec "rofi -combi-modi window,drun -modi 'combi,run,ssh' -show combi"
-bindsym $mod+p exec "~/.i3/scripts/rofi-pass"
+bindsym $mod+p exec "~/.config/i3/scripts/rofi-pass"
 
 # There also is the (new) i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
@@ -207,7 +207,7 @@ bindsym XF86AudioPrev exec playerctl previous
 for_window [class="Firefox" instance="Browser"] floating enable
 
 # power management
-set $Locker ~/.i3/scripts/lock/lock && sleep 1
+set $Locker ~/.config/i3/scripts/lock/lock && sleep 1
 
 set $mode_system System (l) lock, (e) logout, (s) suspend (Shift+s) shutdown
 mode "$mode_system" {
@@ -228,11 +228,11 @@ bindsym $mod+Delete mode "$mode_system"
 # Set the shortcuts and what they do
 set $mode_display Ext Screen (m) mirror, (j) joint, (b) built-in, (e) external
 mode "$mode_display" {
-    bindsym m exec --no-startup-id ~/.i3/scripts/screens mirror, mode "default"
-    bindsym j exec --no-startup-id ~/.i3/scripts/screens join, mode "default"
-    bindsym b exec --no-startup-id ~/.i3/scripts/screens internal, mode "default"
-    bindsym i exec --no-startup-id ~/.i3/scripts/screens internal, mode "default"
-    bindsym e exec --no-startup-id ~/.i3/scripts/screens external, mode "default"
+    bindsym m exec --no-startup-id ~/.config/i3/scripts/screens mirror, mode "default"
+    bindsym j exec --no-startup-id ~/.config/i3/scripts/screens join, mode "default"
+    bindsym b exec --no-startup-id ~/.config/i3/scripts/screens internal, mode "default"
+    bindsym i exec --no-startup-id ~/.config/i3/scripts/screens internal, mode "default"
+    bindsym e exec --no-startup-id ~/.config/i3/scripts/screens external, mode "default"
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"
@@ -245,9 +245,12 @@ bindsym $mod+F8 mode "$mode_display"
 #mouse bindings
 exec --no-startup-id synclient VertScrollDelta=-111
 
+# system tools and indicators
 # Dropdown Terminal set to postion and floating mode
 exec --no-startup-id tilda 
 for_window [class="Tilda"] floating enable
 
+exec --no-startup-id nm-applet
+
 # KDE Conntect
-# exec --no-startup-id kdeconnect-indicator
+exec --no-startup-id kdeconnect-indicator

@@ -22,6 +22,7 @@
       name: ['apt-transport-https', 'code']
       state: latest
     become: yes
+    ## configure settings sync afterwards https://itnext.io/settings-sync-with-vs-code-c3d4f126989
 
 - name: Install SDKMAN
   block:
@@ -41,5 +42,5 @@
     lineinfile:
       dest: ~/.zshrc
       regexp: 'sdkman-init.sh'
-      line: 'source $HOME/.sdkman/bin/sdkman-init.sh'
+      line: '[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"'
       state: present

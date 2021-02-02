@@ -17,9 +17,17 @@
     - pass
     - eog
     - tilda
+    - kdeconnect
 
-- name: Link tilda config
-  file:
-    src: "~/dotfiles/tilda"
-    dest: "~/.config/tilda/config_0"
-    state: link
+- name: Tilda config
+  block:
+  - name: Creates tilda config directory
+    file:
+      path: ~/.config/tilda
+      state: directory
+  - name: Link config file
+    file:
+      src: "~/dotfiles/tilda"
+      dest: "~/.config/tilda/config_0"
+      state: link
+      force: yes
