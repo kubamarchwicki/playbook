@@ -1,0 +1,18 @@
+- name: "Install vscode"
+  block:
+  - name: Add microsoft GPG key
+    apt_key: 
+      url: https://packages.microsoft.com/keys/microsoft.asc
+      keyring: /etc/apt/trusted.gpg.d/packages.microsoft.gpg
+    become: yes
+
+  - name: Add APT repository
+    apt_repository:
+      repo: deb [arch=amd64,arm64,armhf signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main
+    become: yes
+
+  - name: Install code and supporting tools
+    apt:
+      name: ['apt-transport-https', 'code']
+      state: latest
+    become: yes
