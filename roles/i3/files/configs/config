@@ -242,9 +242,12 @@ mode "$mode_display" {
 # Declare here the shortcut to bring the display selection menu
 bindsym $mod+F8 mode "$mode_display"
 
+#mouse bindings
+exec --no-startup-id synclient VertScrollDelta=-111
+
 # Dropdown Terminal set to postion and floating mode
-# exec --no-startup-id tilda 
-# for_window [class="Tilda"] floating enable
+exec --no-startup-id tilda 
+for_window [class="Tilda"] floating enable
 
 # KDE Conntect
 # exec --no-startup-id kdeconnect-indicator
