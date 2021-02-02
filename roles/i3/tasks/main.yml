@@ -1,0 +1,23 @@
+- name: Install i3 tools
+  become: yes
+  apt:
+    state: latest
+    name:
+    - i3
+    - ranger
+    - rofi
+    - gnome-screenshot
+    - flameshot
+    
+- name: Copy i3 scripts
+  copy:
+    src: "roles/i3/files/scripts"
+    dest: "~/.i3/scripts/"
+
+- name: Copy i3 configurations
+  copy:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  loop: 
+     - { src: "roles/i3/files/configs/config", dest: "~/.i3/config"}
+     - { src: "roles/i3/files/configs/.i3status.conf", dest: "~/.i3status.conf"}

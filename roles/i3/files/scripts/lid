@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+# run from /lib/systemd/system-sleep/screens-mgmt.sh
+#     from /etc/acpi/events/lm_lid
+
+#lid state closed / external  monitor -> ./screens.sh external
+#lid state open / external monitor -> ./screens.sh join
+#lid state open / no external monitor -> ./screens.sh internal
+#lid state closed / no external monitor -> systemctl suspend
+
+IS_OPEN=$( [ $(cat /proc/acpi/button/lid/LID0/state | awk '{print $2}') = 'open' ] ; echo $?)
+IS_EXTERNAL=$( [ $(cat /sys/class/drm/card0-DP-1/status) == 'connected' ] ; echo $?)
+
+# echo "`date` display=${DISPLAY} isOpen=${IS_OPEN} isExternal=${IS_EXTERNAL}" > /tmp/lid/aaa
+
+if [ $IS_OPEN == 0 ] && [ $IS_EXTERNAL == 0 ]; then 
+    # echo `date` >> /tmp/lid/both
+    su - jakub -c "export DISPLAY=:0; /home/jakub/.bin/screens.sh join"
+elif [ $IS_OPEN == 1 ] && [ $IS_EXTERNAL == 0 ]; then
+    # echo `date` >> /tmp/lid/ext
+    su - jakub -c "export DISPLAY=:0; /home/jakub/.bin/screens.sh external"
+elif [ $IS_OPEN == 0 ] && [ $IS_EXTERNAL == 1 ]; then
+    # echo `date` >> /tmp/lid/int
+    su - jakub -c "export DISPLAY=:0; /home/jakub/.bin/screens.sh internal"
+fi

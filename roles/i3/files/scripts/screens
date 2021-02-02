@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+# https://unix.stackexchange.com/questions/13746/how-can-i-detect-when-a-monitor-is-plugged-in-or-unplugged/60110#60110
+# https://stackoverflow.com/questions/5469828/how-to-create-a-callback-for-monitor-plugged-on-an-intel-graphics
+
+SCR_EXT="DP-1"
+SCR_INT="eDP-1"
+
+screen_mirror() {
+  xrandr --output $SCR_EXT --scale-from 3200x1800 --same-as $SCR_INT
+}
+
+screen_join() {
+  xrandr --output $SCR_EXT --primary --auto --output $SCR_INT --left-of $SCR_EXT --auto
+}
+
+screen_external() {
+  xrandr --output $SCR_EXT --auto --output $SCR_INT --off
+}
+
+screen_internal() {
+  xrandr --output $SCR_EXT --off --output $SCR_INT --auto
+}
+
+main() {
+  case "$1" in
+    "external")
+    screen_external
+    ;;
+    "internal")
+    screen_internal
+    ;;
+    "mirror")
+    screen_mirror
+    ;;
+    "join")
+    screen_join
+    ;;
+    *)
+    echo "Unknown action \"$1\"" 1>&2
+    exit 1
+    ;;
+  esac
+}
+
+if [ $# -ne 1 ]; then
+  echo "Usage: screens.sh {internal|external|mirror|join}"
+  exit 1
+fi
+
+main $@

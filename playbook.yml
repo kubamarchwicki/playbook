@@ -9,7 +9,7 @@
       package_facts:
         manager: apt
   roles:
-    - i3wm
+    - i3
     - basic-tools
     - basic-ui-tools
     - dotfiles
