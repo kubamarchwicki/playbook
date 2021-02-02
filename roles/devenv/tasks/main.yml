@@ -1,3 +1,9 @@
+- name: "Install generic dev tools"
+  apt: 
+    name: ['direnv']
+    state: latest
+  become: yes
+
 - name: "Install vscode"
   block:
   - name: Add microsoft GPG key
