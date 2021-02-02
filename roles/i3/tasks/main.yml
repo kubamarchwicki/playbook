@@ -12,7 +12,7 @@
 - name: Copy i3 scripts
   copy:
     src: "roles/i3/files/scripts"
-    dest: "~/.i3/scripts/"
+    dest: "~/.i3/"
 
 - name: Copy i3 configurations
   copy:
