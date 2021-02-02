@@ -17,3 +17,15 @@
       name: "{{ ansible_env.USER }}"
       shell: /usr/bin/zsh
     become: yes
+
+- name: Link dotfiles
+  file:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    state: link
+  loop:
+    - { src: "~/dotfiles/git/.gitconfig", dest: "~/.gitconfig"}
+    - { src: "~/dotfiles/git/.gitignore_global", dest: "~/.gitignore_global"}
+    - { src: "~/dotfiles/zsh/.zshrc_helpers", dest: "~/.zshrc_helpers"}
+    - { src: "~/dotfiles/zsh/.docker_aliases", dest: "~/.docker_aliases"}
+    - { src: "~/dotfiles/zsh/.zshrc", dest: "~/.zshrc"}
