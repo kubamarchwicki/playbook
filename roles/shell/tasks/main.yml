@@ -1,12 +1,19 @@
+- name: Install default packages
+  become: yes
+  apt:
+    state: latest
+    name:
+    - zsh
+
 - name: Install oh-my-zsh
   block: 
-- name: Verify if oh-my-zsh Is Installed
-  stat:
-    path: "~/.oh-my-zsh/"
-  register: "ohmyzsh_installed"
+  - name: Verify if oh-my-zsh Is Installed
+    stat:
+      path: "~/.oh-my-zsh/"
+    register: "ohmyzsh_installed"
 
   - name: Install SDKMAN
-    shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    shell: sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
     args:
       executable: /bin/bash
       warn: no
