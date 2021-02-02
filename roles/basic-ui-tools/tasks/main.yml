@@ -4,6 +4,7 @@
     state: latest
     name:
     - firefox
+    - chromium-browser
 
 - name: Install simplenote client
   apt:
