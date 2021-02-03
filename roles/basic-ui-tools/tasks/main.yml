@@ -12,28 +12,29 @@
     stat:
       path: "/usr/bin/simplenote"
     register: "simplenote_installed"
-  
-# check version from apt show simplenote
-# https://api.github.com/repos/Automattic/simplenote-electron/releases/latest
-
+  - name: Get the latest version of simplenote
+    shell: curl -s https://api.github.com/repos/Automattic/simplenote-electron/releases/latest | grep 'name' | cut -d\" -f4
+    args:
+      warn: False
+    register: latest_simplenote_version
+    changed_when: false
   - name: Install simplenote
     apt:
-      deb: https://github.com/Automattic/simplenote-electron/releases/download/v2.5.0/Simplenote-linux-2.5.0-amd64.deb
+      deb: https://github.com/Automattic/simplenote-electron/releases/download/v{{ latest_simplenote_version.stdout }}/Simplenote-linux-{{ latest_simplenote_version.stdout }}-amd64.deb
     become: yes
     when: not simplenote_installed.stat.exists
 
-- name: Install simplenote
-  block: 
-  - name: Verify if simplenote Is Installed
+- name: Install dropbox
+  block:
+  - name: Verify dropbox is installed
     stat:
-      path: "/usr/bin/simplenote"
-    register: "simplenote_installed"
-  
-  - name: Install simplenote package
-    apt:
-      deb: https://github.com/Automattic/simplenote-electron/releases/download/v2.5.0/Simplenote-linux-2.5.0-amd64.deb
-    become: yes
-    when: not simplenote_installed.stat.exists
+      path: "~/.dropbox-dist/dropboxd"
+    register: "dropbox_installed"  
+  - name: Install dropbox package
+    shell: cd ~ && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
+    args:
+      warn: False    
+    when: not dropbox_installed.stat.exists
 
 - name: Install slack
   block: 
