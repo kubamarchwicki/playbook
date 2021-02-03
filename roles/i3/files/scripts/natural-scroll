@@ -9,4 +9,4 @@ natural_scrolling_id=`xinput list-props ${id} | \
 
 echo "Natural scrolling ID ${natural_scrolling_id}"
 
-xinput --set-prop $id ${natural_scrolling_id} 1 
+xinput --set-prop $id ${natural_scrolling_id} 0

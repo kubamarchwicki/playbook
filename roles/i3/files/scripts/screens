@@ -11,7 +11,7 @@ screen_mirror() {
 }
 
 screen_join() {
-  xrandr --output $SCR_INT --auto --left-of $SCR_EXT --output $SCR_EXT --primary --auto 
+  xrandr --output $SCR_INT --auto --brightness 0.65 --left-of $SCR_EXT --output $SCR_EXT --primary --auto 
 }
 
 screen_external() {
@@ -19,7 +19,7 @@ screen_external() {
 }
 
 screen_internal() {
-  xrandr --output $SCR_INT --auto --scale 2x2 --output $SCR_EXT --off 
+  xrandr --output $SCR_INT --auto --scale 2x2 --brightness 0.65 --output $SCR_EXT --off 
 }
 
 main() {

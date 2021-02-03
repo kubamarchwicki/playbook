@@ -1,3 +1,10 @@
+- name: Basic tools ppas
+  block:
+  - name: Kernel mainline ppa
+    apt_repository:
+      repo: ppa:cappelikan/ppa
+    become: yes
+
 - name: Install basic tools
   become: yes
   apt:
@@ -9,6 +16,7 @@
     - mc
     - tmux
     - zip
+    - xz-utils
     - sudo
     - bat
     - youtube-dl
@@ -18,6 +26,20 @@
     - eog
     - tilda
     - kdeconnect
+    - mainline
+
+- name: Install passff-host for password store
+  block:
+  - name: Verify if passff-host is installed
+    stat:
+      path: "~/.mozilla/native-messaging-hosts/passff.py"
+    register: "passff_installed"
+
+  - name: Install passff-host
+    shell: curl -sSL github.com/passff/passff-host/releases/latest/download/install_host_app.sh | bash -s -- firefox    
+    args:    
+      warn: false
+    when: not passff_installed.stat.exists
 
 - name: Tilda config
   block:
