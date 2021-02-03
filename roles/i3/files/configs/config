@@ -207,7 +207,7 @@ bindsym XF86AudioPrev exec playerctl previous
 for_window [class="Firefox" instance="Browser"] floating enable
 
 # power management
-set $Locker ~/.config/i3/scripts/lock/lock && sleep 1
+set $Locker ~/.config/i3/scripts/lock && sleep 1
 
 set $mode_system System (l) lock, (e) logout, (s) suspend (Shift+s) shutdown
 mode "$mode_system" {
@@ -243,7 +243,7 @@ mode "$mode_display" {
 bindsym $mod+F8 mode "$mode_display"
 
 #mouse bindings
-exec --no-startup-id synclient VertScrollDelta=-111
+exec --no-startup-id ~/.config/i3/scripts/natural-scroll
 
 # system tools and indicators
 # Dropdown Terminal set to postion and floating mode

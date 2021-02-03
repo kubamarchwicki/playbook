@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
 curr_width=`xdpyinfo | awk '/dimensions/{print substr($2,0,5)}'`
-tmpbg="/home/`whoami`/.i3/scripts/lock-images/lock-${curr_width}.png"
+tmpbg="/home/`whoami`/.config/i3/scripts/lock-images/lock-${curr_width}.png"
 
 i3lock -e -t -i "$tmpbg"
