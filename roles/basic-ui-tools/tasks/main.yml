@@ -48,3 +48,39 @@
       deb: https://downloads.slack-edge.com/linux_releases/slack-desktop-4.12.2-amd64.deb
     become: yes
     when: not slack_installed.stat.exists
+
+- name: Install fonts
+  block:
+  - name: Get the latest version of Inconsolata font
+    shell: curl -s https://api.github.com/repos/googlefonts/Inconsolata/releases/latest | grep 'tag_name' | cut -d\" -f4
+    args:
+      warn: False
+    register: latest_inconsolata_version
+    changed_when: false
+  - name: create ~/.fonts/Inconsolata directory
+    file:
+      path: ~/.fonts/Inconsolata
+      state: directory    
+  - name: Copy Inconsolata font
+    unarchive:
+      src: https://github.com/googlefonts/Inconsolata/releases/download/{{ latest_inconsolata_version.stdout }}/fonts_ttf.zip
+      dest: ~/.fonts/Inconsolata      
+      remote_src: yes
+  - name: Get the latest version of FiraCode font
+    shell: curl -s https://api.github.com/repos/tonsky/FiraCode/releases/latest | grep 'tag_name' | cut -d\" -f4
+    args:
+      warn: False
+    register: latest_firacode_version 
+    changed_when: false
+  - name: create ~/.fonts/FiraCode directory
+    file:
+      path: ~/.fonts/FiraCode
+      state: directory    
+  - name: Copy FiraCode font
+    unarchive:
+      src: https://github.com/tonsky/FiraCode/releases/download/{{ latest_firacode_version.stdout }}/Fira_Code_v{{ latest_firacode_version.stdout }}.zip
+      dest: ~/.fonts/FiraCode
+      exclude: [ "variable_tff", "woff", "woff2" ]
+      remote_src: yes
+  - name: Install fonts
+    shell: fc-cache -fv

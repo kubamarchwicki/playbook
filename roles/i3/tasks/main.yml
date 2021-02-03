@@ -11,6 +11,14 @@
     
 - name: Configure i3
   block:
+  - name: Create config directories
+    file: 
+      path: "{{ item.path }}"
+      state: directory
+      mode: 0755
+    loop: 
+      - { path: "~/.config/dunst" }
+      - { path: "~/.config/i3" }
   - name: Copy i3 scripts
     copy:
       src: "roles/i3/files/scripts"
@@ -21,10 +29,12 @@
       state: directory
       recurse: yes
       mode: 0755
-  - name: Copy i3 configurations
-    copy:
+  - name: Link i3 configurations
+    file:
       src: "{{ item.src }}"
       dest: "{{ item.dest }}"
+      state: link
+      force: yes
     loop: 
       - { src: "~/dotfiles/i3/config", dest: "~/.config/i3/config"}
       - { src: "~/dotfiles/i3/.i3status.conf", dest: "~/.i3status.conf"}
