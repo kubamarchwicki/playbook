@@ -28,3 +28,4 @@
     loop: 
       - { src: "roles/i3/files/configs/config", dest: "~/.config/i3/config"}
       - { src: "roles/i3/files/configs/.i3status.conf", dest: "~/.i3status.conf"}
+      - { src: "roles/i3/files/configs/dunstrc", dest: "~/.config/dunst/dunstrc"}
