@@ -49,7 +49,7 @@
     become: yes
     when: not slack_installed.stat.exists
 
-- name: Install fonts
+- name: Install Inconsolata font
   block:
   - name: Get the latest version of Inconsolata font
     shell: curl -s https://api.github.com/repos/googlefonts/Inconsolata/releases/latest | grep 'tag_name' | cut -d\" -f4
@@ -66,21 +66,39 @@
       src: https://github.com/googlefonts/Inconsolata/releases/download/{{ latest_inconsolata_version.stdout }}/fonts_ttf.zip
       dest: ~/.fonts/Inconsolata      
       remote_src: yes
-  - name: Get the latest version of FiraCode font
-    shell: curl -s https://api.github.com/repos/tonsky/FiraCode/releases/latest | grep 'tag_name' | cut -d\" -f4
-    args:
-      warn: False
-    register: latest_firacode_version 
-    changed_when: false
-  - name: create ~/.fonts/FiraCode directory
-    file:
-      path: ~/.fonts/FiraCode
-      state: directory    
-  - name: Copy FiraCode font
-    unarchive:
-      src: https://github.com/tonsky/FiraCode/releases/download/{{ latest_firacode_version.stdout }}/Fira_Code_v{{ latest_firacode_version.stdout }}.zip
-      dest: ~/.fonts/FiraCode
-      exclude: [ "variable_tff", "woff", "woff2" ]
-      remote_src: yes
-  - name: Install fonts
-    shell: fc-cache -fv
+
+  - name: Install Firacode font
+    block:
+    - name: Create ~/.fonts/FiraCode directory
+      file:
+        path: ~/.fonts/FiraCode
+        state: directory    
+    - name: Create a temporary directory 
+      tempfile:
+        state: directory
+      changed_when: False
+      register: font_dowload_tempdir
+    - name: Get the latest version of FiraCode font
+      shell: curl -s https://api.github.com/repos/tonsky/FiraCode/releases/latest | grep 'tag_name' | cut -d\" -f4
+      args:
+        warn: False
+      register: latest_firacode_version 
+      changed_when: false
+    - name: Dowload the FiraCode font archive to the temporary directory
+      get_url:
+        url: https://github.com/tonsky/FiraCode/releases/download/{{ latest_firacode_version.stdout }}/Fira_Code_v{{ latest_firacode_version.stdout }}.zip
+        dest: '{{ font_dowload_tempdir.path }}/firacode.zip'
+      changed_when: False
+    - name: Install FiraCode
+      shell: 'unzip -jo "{{ font_dowload_tempdir.path }}/firacode.zip" ttf/* -d ~/.fonts/FiraCode'
+      args:
+        warn: no
+    always:
+      - name: Clean up the firecode temporary download directory
+        file:
+          path: '{{ font_dowload_tempdir.path }}'
+          state: absent
+        changed_when: False
+
+- name: Install fonts
+  shell: fc-cache -fv

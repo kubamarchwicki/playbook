@@ -27,6 +27,7 @@
     - tilda
     - kdeconnect
     - mainline
+    - net-tools
 
 - name: Install passff-host for password store
   block:
