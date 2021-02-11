@@ -29,15 +29,16 @@
     - kdeconnect
     - mainline
     - net-tools
+    - acpi
 
 - name: Install passff-host for password store
   block:
-  - name: Verify if passff-host is installed
+  - name: "passff-host: verify host is installed"
     stat:
       path: "~/.mozilla/native-messaging-hosts/passff.py"
     register: "passff_installed"
 
-  - name: Install passff-host
+  - name: "passff-host: install"
     shell: curl -sSL github.com/passff/passff-host/releases/latest/download/install_host_app.sh | bash -s -- firefox    
     args:    
       warn: false
@@ -45,11 +46,11 @@
 
 - name: Tilda config
   block:
-  - name: Creates tilda config directory
+  - name: "Tilda: creates config directory"
     file:
       path: ~/.config/tilda
       state: directory
-  - name: Link config file
+  - name: "Tilda: link config file"
     file:
       src: "~/dotfiles/tilda"
       dest: "~/.config/tilda/config_0"

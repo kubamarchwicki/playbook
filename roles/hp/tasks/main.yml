@@ -1,0 +1,25 @@
+# - name: Install additional ubuntu-drivers
+#   become: yes
+#   apt:
+#     state: latest
+#     name:
+#     - nvidia-driver-450
+
+- name: Turn of HDMI audio
+  become: yes
+  lineinfile:
+    path: /usr/share/alsa/ucm2/sof-hda-dsp/HiFi.conf
+    regexp: '^<sof-hda-dsp\/Hdmi\.conf>$'
+    line: '# <sof-hda-dsp/Hdmi.conf> #https://bbs.archlinux.org/viewtopic.php?id=256753'
+
+- name: Set sleep2idle in grub  
+  block:
+  - name: replace GRUB_CMDLINE to set new default mem_sleep
+    become: yes
+    lineinfile:
+      path: /etc/default/grub
+      regexp: 'GRUB_CMDLINE_LINUX_DEFAULT=\"quiet splash\"'
+      line: 'GRUB_CMDLINE_LINUX_DEFAULT="quiet splash mem_sleep_default=s2idle"'
+  - name: Restart grub
+    become: yes
+    shell: update-grub

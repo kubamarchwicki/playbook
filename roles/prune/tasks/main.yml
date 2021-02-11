@@ -1,0 +1,8 @@
+- name: Remove unwanted packages
+  become: yes
+  apt:
+    state: absent
+    name:
+    - thunderbird
+    - pidgin
+    - transmission    

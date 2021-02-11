@@ -24,13 +24,35 @@
     become: yes
     when: not simplenote_installed.stat.exists
 
+- name: Install Signal
+  block:
+  - name: "Signal: add GPG key"
+    apt_key:
+      url: https://updates.signal.org/desktop/apt/keys.asc
+    become: yes
+  - name: "Signal: add APT repository"
+    apt_repository:
+      repo: deb [arch=amd64] https://updates.signal.org/desktop/apt xenial main
+    become: yes
+  - name: "Signal: install package"
+    apt:
+      name: ['signal-desktop']
+      state: latest
+    become: yes
+
+# pulseaudio-dlna
+# sudo apt-add-repository ppa:qos/pulseaudio-dlna
+# sudo apt-get update
+# sudo apt-get install pulseaudio-dlna
+# https://github.com/masmu/pulseaudio-dlna
+
 - name: Install dropbox
   block:
-  - name: Verify dropbox is installed
+  - name: "Dropbox: verify if installed"
     stat:
       path: "~/.dropbox-dist/dropboxd"
     register: "dropbox_installed"  
-  - name: Install dropbox package
+  - name: "Dropbox: install package"
     shell: cd ~ && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
     args:
       warn: False    
@@ -38,12 +60,12 @@
 
 - name: Install slack
   block: 
-  - name: Verify if slack Is Installed
+  - name: "Slack: verify if Installed"
     stat:
       path: "/usr/bin/slack"
     register: "slack_installed"
   
-  - name: Install slack package
+  - name: "Slack: install package"
     apt:
       deb: https://downloads.slack-edge.com/linux_releases/slack-desktop-4.12.2-amd64.deb
     become: yes
@@ -51,17 +73,17 @@
 
 - name: Install Inconsolata font
   block:
-  - name: Get the latest version of Inconsolata font
+  - name: "Inconsolata: get the latest version"
     shell: curl -s https://api.github.com/repos/googlefonts/Inconsolata/releases/latest | grep 'tag_name' | cut -d\" -f4
     args:
       warn: False
     register: latest_inconsolata_version
     changed_when: false
-  - name: create ~/.fonts/Inconsolata directory
+  - name: "Inconsolata: create ~/.fonts/ subdirectory"
     file:
       path: ~/.fonts/Inconsolata
       state: directory    
-  - name: Copy Inconsolata font
+  - name: "Inconsolata: copy font"
     unarchive:
       src: https://github.com/googlefonts/Inconsolata/releases/download/{{ latest_inconsolata_version.stdout }}/fonts_ttf.zip
       dest: ~/.fonts/Inconsolata      
@@ -73,28 +95,28 @@
       file:
         path: ~/.fonts/FiraCode
         state: directory    
-    - name: Create a temporary directory 
+    - name: "Firacode: Create a temporary directory "
       tempfile:
         state: directory
       changed_when: False
       register: font_dowload_tempdir
-    - name: Get the latest version of FiraCode font
+    - name: "Firacode: get the latest version"
       shell: curl -s https://api.github.com/repos/tonsky/FiraCode/releases/latest | grep 'tag_name' | cut -d\" -f4
       args:
         warn: False
       register: latest_firacode_version 
       changed_when: false
-    - name: Dowload the FiraCode font archive to the temporary directory
+    - name: "FiraCode: download the font archive to the temporary directory"
       get_url:
         url: https://github.com/tonsky/FiraCode/releases/download/{{ latest_firacode_version.stdout }}/Fira_Code_v{{ latest_firacode_version.stdout }}.zip
         dest: '{{ font_dowload_tempdir.path }}/firacode.zip'
       changed_when: False
-    - name: Install FiraCode
+    - name: "FiraCode: install font"
       shell: 'unzip -jo "{{ font_dowload_tempdir.path }}/firacode.zip" ttf/* -d ~/.fonts/FiraCode'
       args:
         warn: no
     always:
-      - name: Clean up the firecode temporary download directory
+      - name: "FiraCode: clean up the temporary download directory"
         file:
           path: '{{ font_dowload_tempdir.path }}'
           state: absent

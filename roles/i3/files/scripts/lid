@@ -3,6 +3,10 @@
 # run from /lib/systemd/system-sleep/screens-mgmt.sh
 #     from /etc/acpi/events/lm_lid
 
+# /etc/acpi/events/lid
+# event=button/lid.*
+# action=~/.config/i3/scripts/lid
+
 #lid state closed / external  monitor -> ./screens.sh external
 #lid state open / external monitor -> ./screens.sh join
 #lid state open / no external monitor -> ./screens.sh internal

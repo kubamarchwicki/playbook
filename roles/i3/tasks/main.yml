@@ -39,3 +39,18 @@
       - { src: "~/dotfiles/i3/config", dest: "~/.config/i3/config"}
       - { src: "~/dotfiles/i3/.i3status.conf", dest: "~/.i3status.conf"}
       - { src: "~/dotfiles/i3/dunstrc", dest: "~/.config/dunst/dunstrc"}
+
+  - name: Configure lid events
+    become: yes  
+    copy:
+      dest: "/etc/acpi/events/lm_lid"
+      content: |
+        event=button/lid.*
+        action=/home/{{ansible_env.USER}}/.config/i3/scripts/lid
+  - name: Battery notification
+    become: yes
+    copy:
+      dest: "/etc/acpi/events/battery"
+      content: |
+        event=battery.*
+        action=/home/{{ansible_env.USER}}/.config/i3/scripts/battery_level
