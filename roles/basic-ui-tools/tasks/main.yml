@@ -5,6 +5,7 @@
     name:
     - firefox
     - chromium-browser
+    - nautilus
 
 - name: Install simplenote
   block: 

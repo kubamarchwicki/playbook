@@ -50,7 +50,6 @@
   - name: Battery notification
     become: yes
     copy:
-      dest: "/etc/acpi/events/battery"
+      dest: "/etc/udev/rules.d/99-lowbat.rules"
       content: |
-        event=battery.*
-        action=/home/{{ansible_env.USER}}/.config/i3/scripts/battery_level
+        SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="[0-15]", RUN+="/usr/bin/su {{ansible_env.USER}} -c /home/{{ansible_env.USER}}/.config/i3/scripts/battery_level"
