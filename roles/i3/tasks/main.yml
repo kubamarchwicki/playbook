@@ -23,6 +23,10 @@
     copy:
       src: "roles/i3/files/scripts"
       dest: "~/.config/i3/"
+  - name: Download rofi-pass
+    get_url:
+      url: "https://raw.githubusercontent.com/carnager/rofi-pass/master/rofi-pass"
+      dest: "~/.config/i3/scripts/rofi-pass"
   - name: Set scripts permissions
     file:
       path: "~/.config/i3/scripts"
@@ -37,6 +41,7 @@
       force: yes
     loop: 
       - { src: "~/dotfiles/i3/config", dest: "~/.config/i3/config"}
+      - { src: "~/dotfiles/i3/rofi-pass.config", dest: "~/.config/rofi-pass/config"}
       - { src: "~/dotfiles/i3/.i3status.conf", dest: "~/.i3status.conf"}
       - { src: "~/dotfiles/i3/dunstrc", dest: "~/.config/dunst/dunstrc"}
 

@@ -17,6 +17,7 @@
     - tmux
     - zip
     - xz-utils
+    - gawk
     - sudo
     - bat
     - xfce4-clipman-plugin
