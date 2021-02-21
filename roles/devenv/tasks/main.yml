@@ -6,39 +6,58 @@
 
 - name: "Install vscode"
   block:
-  - name: Add microsoft GPG key
+  - name: "vscode: add microsoft GPG key"
     apt_key: 
       url: https://packages.microsoft.com/keys/microsoft.asc
       keyring: /etc/apt/trusted.gpg.d/packages.microsoft.gpg
     become: yes
 
-  - name: Add APT repository
+  - name: "vscode: add APT repository"
     apt_repository:
       repo: deb [arch=amd64,arm64,armhf signed-by=/etc/apt/trusted.gpg.d/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main
     become: yes
 
-  - name: Install code and supporting tools
+  - name: "vscode: install ide and supporting tools"
     apt:
       name: ['apt-transport-https', 'code']
       state: latest
     become: yes
     ## configure settings sync afterwards https://itnext.io/settings-sync-with-vs-code-c3d4f126989
 
+- name: "Install gcloud"
+  block:
+  - name: "gcloud: add Google Cloud public key"
+    apt_key: 
+      url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+      keyring: /etc/apt/trusted.gpg.d/cloud.google.gpg
+    become: yes
+
+  - name: "gcloud: add APT repository"
+    apt_repository:
+      repo: deb [signed-by=/etc/apt/trusted.gpg.d/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main
+    become: yes
+
+  - name: "gcloud: install sdk"
+    apt:
+      name: ['apt-transport-https', 'ca-certificates', 'gnupg', 'google-cloud-sdk']
+      state: latest
+    become: yes
+
 - name: Install SDKMAN
   block:
-  - name: Verify if SDKMAN Is Installed
+  - name: "sdkman: verify if SDKMAN Is Installed"
     stat:
       path: "~/.sdkman/"
     register: "sdkman_installed"
 
-  - name: Install SDKMAN
+  - name: "sdkman: install"
     shell: 'curl -s http://get.sdkman.io | bash'
     args:
       executable: /bin/bash
       warn: no
     when: not sdkman_installed.stat.exists
 
-  - name: Add SDKMAN in .zshrc
+  - name: "sdkman: add to .zshrc"
     lineinfile:
       dest: ~/.zshrc
       regexp: 'sdkman-init.sh'
