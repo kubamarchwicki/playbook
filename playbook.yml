@@ -10,10 +10,10 @@
         manager: apt
   roles:
     - i3
+    - shell
     - basic-tools
     - basic-ui-tools
-    - devenv
-    - shell
+    - devenv    
     - docker  
     - prune
     - hp

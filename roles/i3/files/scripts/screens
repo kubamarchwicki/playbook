@@ -3,23 +3,39 @@
 # https://unix.stackexchange.com/questions/13746/how-can-i-detect-when-a-monitor-is-plugged-in-or-unplugged/60110#60110
 # https://stackoverflow.com/questions/5469828/how-to-create-a-callback-for-monitor-plugged-on-an-intel-graphics
 
-SCR_EXT="DP-0"
-SCR_INT="eDP-1-1"
+# https://www.reddit.com/r/archlinux/comments/5x2syg/multiple_monitors_with_different_dpis/
+# https://blog.summercat.com/configuring-mixed-dpi-monitors-with-xrandr.html
+# https://ricostacruz.com/til/fractional-scaling-on-xorg-linux
+
+# https://wiki.archlinux.org/index.php/HiDPI#Multiple_displays
+# https://askubuntu.com/questions/704503/scale-2x2-in-xrandr-causes-the-monitor-to-not-display-anything/979551#979551
+
+SCR_EXT="DP-1"
+SCR_INT="eDP-1"
 
 screen_mirror() {
-  xrandr --output $SCR_INT --auto --output $SCR_EXT --mode 1920x1080
+# nvidia drivers		
+	# xrandr --dpi 163 --output $SCR_INT --auto --brightness 0.65 --output $SCR_EXT --auto
+   screen_internal
+   xrandr --output $SCR_INT --auto --scale 2x2 --brightness 0.65 --output $SCR_EXT --auto
 }
 
 screen_join() {
-  xrandr --output $SCR_INT --auto --brightness 0.65 --left-of $SCR_EXT --output $SCR_EXT --primary  --scale 1x1 --mode 1920x1080
+# nvidia drivers	
+	# xrandr --dpi 192 --output $SCR_INT --auto --scale 1x1 --brightness 0.65 --left-of $SCR_EXT --output $SCR_EXT --primary  --auto
+	xrandr --output $SCR_INT --auto --brightness 0.65 --scale 1x1 --left-of $SCR_EXT --output $SCR_EXT --primary  --auto
 }
 
 screen_external() {
-  xrandr --output $SCR_INT --off --output $SCR_EXT --scale 1x1 --mode 1920x1080
+# nvidia drivers
+	# xrandr --dpi 245 --output $SCR_INT --off --output $SCR_EXT --auto
+   	xrandr --output $SCR_INT --off --output $SCR_EXT --auto
 }
 
 screen_internal() {
-  xrandr --output $SCR_INT --auto --brightness 0.65 --output $SCR_EXT --off 
+# nvidia drivers
+	# xrandr --dpi 163 --output $SCR_INT --auto --scale 2x2 --brightness 0.65 --output $SCR_EXT --off 
+	xrandr --output $SCR_INT --auto --scale 2x2 --brightness 0.65 --output $SCR_EXT --off 
 }
 
 main() {
