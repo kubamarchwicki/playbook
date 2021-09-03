@@ -42,7 +42,7 @@
       force: yes
     loop: 
       - { src: "~/dotfiles/i3/config", dest: "~/.config/i3/config"}
-      - { src: "~/dotfiles/i3/rofi-pass.config", dest: "~/.config/rofi-pass/config"}
+      - { src: "~/dotfiles/i3/rofipass.config", dest: "~/.config/rofi-pass/config"}
       - { src: "~/dotfiles/i3/i3status.conf", dest: "~/.i3status.conf"}
       - { src: "~/dotfiles/i3/Xresources", dest: "~/.Xresources"}
       - { src: "~/dotfiles/i3/dunstrc", dest: "~/.config/dunst/dunstrc"}
