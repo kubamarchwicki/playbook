@@ -14,14 +14,14 @@
       path: "/usr/bin/simplenote"
     register: "simplenote_installed"
   - name: Get the latest version of simplenote
-    shell: curl -s https://api.github.com/repos/Automattic/simplenote-electron/releases/latest | grep 'tag_name' | cut -d\" -f4
+    shell: curl -s https://api.github.com/repos/Automattic/simplenote-electron/releases/latest | grep 'tag_name' | cut -d\" -f4 | cut -c 2-
     args:
       warn: False
     register: latest_simplenote_version
     changed_when: false
   - name: Install simplenote
     apt:
-      deb: https://github.com/Automattic/simplenote-electron/releases/download/{{ latest_simplenote_version.stdout }}/Simplenote-linux-{{ latest_simplenote_version.stdout }}-amd64.deb
+      deb: https://github.com/Automattic/simplenote-electron/releases/download/v{{ latest_simplenote_version.stdout }}/Simplenote-linux-{{ latest_simplenote_version.stdout }}-amd64.deb
     become: yes
     when: not simplenote_installed.stat.exists
 
