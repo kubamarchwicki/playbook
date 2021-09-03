@@ -20,6 +20,7 @@
     loop: 
       - { path: "~/.config/dunst" }
       - { path: "~/.config/i3" }
+      - { path: "~/.config/rofi-pass" }
   - name: Copy i3 scripts
     copy:
       src: "roles/i3/files/scripts"
