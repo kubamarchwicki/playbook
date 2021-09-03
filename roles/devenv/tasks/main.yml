@@ -66,6 +66,14 @@
       regexp: 'sdkman-init.sh'
       line: '[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"'
       state: present
+  - name: "sdkman: link dotfiles"
+    file:
+      src: "{{ item.src }}"
+      dest: "{{ item.dest }}"
+      state: link
+      force: yes
+    loop:
+      - { src: "~/dotfiles/sdkman", dest: "~/.sdkman/etc/config"}      
 
 - name: "Install git delta"
   block:
