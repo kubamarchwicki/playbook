@@ -39,7 +39,7 @@ fi
 
 if ! command -v git &> /dev/null;
     then
-        installing "git" && sudo apt update && sudo apt install git
+        installing "git" && sudo apt -y update && sudo apt -y install git
     else
         ok "git"
 fi
@@ -55,7 +55,7 @@ done
 
 if ! command -v ansible &> /dev/null;
     then
-        installing "ansible" && apt update && apt install ansible
+        installing "ansible" && sudo apt -y update && sudo apt -y install ansible
     else
         ok "ansible"
 fi
