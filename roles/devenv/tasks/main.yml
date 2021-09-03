@@ -2,7 +2,6 @@
   apt: 
     name: 
     - direnv
-    - kubectl
     - awscli
     state: latest
   become: yes
@@ -26,6 +25,26 @@
       state: latest
     become: yes
     ## configure settings sync afterwards https://itnext.io/settings-sync-with-vs-code-c3d4f126989
+
+- name: "Install kubectl"
+  block:
+  - name: "kubectl: add Google Cloud public key"
+    apt_key: 
+      url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+      keyring: /etc/apt/trusted.gpg.d/cloud.google.gpg
+    become: yes
+
+  - name: "kubectl: add APT repository"
+    apt_repository:
+      repo: deb [signed-by=/etc/apt/trusted.gpg.d/cloud.google.gpg] https://apt.kubernetes.io/ kubernetes-xenial main
+    become: yes
+
+  - name: "kubectl: install"
+    apt:
+      name: ['apt-transport-https', 'kubectl']
+      state: latest
+    become: yes
+
 
 - name: "Install gcloud"
   block:
