@@ -8,6 +8,7 @@
     - rofi
     - gnome-screenshot
     - flameshot
+    - light
     
 - name: Configure i3
   block:

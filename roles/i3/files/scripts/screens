@@ -10,7 +10,8 @@
 # https://wiki.archlinux.org/index.php/HiDPI#Multiple_displays
 # https://askubuntu.com/questions/704503/scale-2x2-in-xrandr-causes-the-monitor-to-not-display-anything/979551#979551
 
-SCR_EXT="DP-1"
+# SCR_EXT="DP-1"
+SCR_EXT=`xrandr | egrep '^DP\-.+ connected' | cut -f1 -d ' '`
 SCR_INT="eDP-1"
 
 screen_mirror() {
@@ -23,7 +24,7 @@ screen_mirror() {
 screen_join() {
 # nvidia drivers	
 	# xrandr --dpi 192 --output $SCR_INT --auto --scale 1x1 --brightness 0.65 --left-of $SCR_EXT --output $SCR_EXT --primary  --auto
-	xrandr --output $SCR_INT --auto --brightness 0.65 --scale 1x1 --left-of $SCR_EXT --output $SCR_EXT --primary  --auto
+	xrandr --output $SCR_INT --auto --brightness 0.65 --scale 1x1 --right-of $SCR_EXT --output $SCR_EXT --primary  --auto
 }
 
 screen_external() {

@@ -15,6 +15,5 @@
     - basic-ui-tools
     - devenv    
     - docker  
-    - prune
-    - hp
+    - prune    
     - workcrap    

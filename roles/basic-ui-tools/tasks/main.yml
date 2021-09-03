@@ -41,6 +41,18 @@
       state: latest
     become: yes
 
+- name: Install OBS Studio
+  block:
+  - name: "OBS: add APT repository"
+    apt_repository:
+      repo: ppa:obsproject/obs-studio
+    become: yes
+  - name: "OBS: install obs-studio"
+    apt:
+      name: ['obs-studio']
+      state: latest
+    become: yes
+
 # pulseaudio-dlna
 # sudo apt-add-repository ppa:qos/pulseaudio-dlna
 # sudo apt-get update

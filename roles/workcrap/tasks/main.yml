@@ -6,24 +6,6 @@
     - network-manager-openvpn
     - network-manager-openvpn-gnome
 
-- name: Install msteams
-  block: 
-  - name: Verify if msteams Is Installed
-    stat:
-      path: "/usr/bin/teams"
-    register: "msteams_installed"
-  
-  - name: Install msteams
-    apt:
-      deb: https://packages.microsoft.com/repos/ms-teams/pool/main/t/teams/teams_1.3.00.30857_amd64.deb
-    become: yes
-    when: not msteams_installed.stat.exists
-
-- name: Install postman
-  become: yes
-  snap:
-    name: postman
-
 - name: Install Hashicorp Vault
   block: 
   - name: "Vault: add GPG key"
