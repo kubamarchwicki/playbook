@@ -14,7 +14,7 @@
       path: "/usr/bin/simplenote"
     register: "simplenote_installed"
   - name: Get the latest version of simplenote
-    shell: curl -s https://api.github.com/repos/Automattic/simplenote-electron/releases/latest | grep 'name' | cut -d\" -f4
+    shell: curl -s https://api.github.com/repos/Automattic/simplenote-electron/releases/latest | grep 'tag_name' | cut -d\" -f4
     args:
       warn: False
     register: latest_simplenote_version
