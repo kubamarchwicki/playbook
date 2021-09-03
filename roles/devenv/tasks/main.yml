@@ -2,7 +2,7 @@
   apt: 
     name: 
     - direnv
-    - vscode
+    - code
     - awscli
     state: latest
   become: yes
