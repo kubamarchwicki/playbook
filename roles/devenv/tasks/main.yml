@@ -113,3 +113,30 @@
       - { name: "delta.decorations.commit-decoration-style", value: "bold yellow box ul" }
       - { name: "delta.decorations.file-style", value: "bold yellow ul" }
       - { name: "delta.decorations.file-decoration-style", value: "none" }
+
+- name: Install VPN packages
+  become: yes
+  apt:
+    state: latest
+    name:
+    - network-manager-openvpn
+    - network-manager-openvpn-gnome
+
+- name: Install Hashicorp Vault
+  block: 
+  - name: "Vault: add GPG key"
+    apt_key:
+      url: https://apt.releases.hashicorp.com/gpg
+    become: yes
+
+  - name: "Vault: add APT repository"
+    apt_repository:
+      repo: deb [arch=amd64] https://apt.releases.hashicorp.com {{ansible_distribution_release}} main
+    become: yes
+
+  - name: "Vault: install package"
+    apt:
+      name: 
+      - vault
+      state: latest
+    become: yes
