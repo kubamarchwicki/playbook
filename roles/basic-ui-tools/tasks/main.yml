@@ -21,7 +21,7 @@
     changed_when: false
   - name: Install simplenote
     apt:
-      deb: https://github.com/Automattic/simplenote-electron/releases/download/v{{ latest_simplenote_version.stdout }}/Simplenote-linux-{{ latest_simplenote_version.stdout }}-amd64.deb
+      deb: https://github.com/Automattic/simplenote-electron/releases/download/{{ latest_simplenote_version.stdout }}/Simplenote-linux-{{ latest_simplenote_version.stdout }}-amd64.deb
     become: yes
     when: not simplenote_installed.stat.exists
 
