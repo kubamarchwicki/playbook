@@ -31,6 +31,8 @@
     - mainline
     - net-tools
     - acpi
+    - bluez
+    - blueman
 
 - name: Install passff-host for password store
   block:
