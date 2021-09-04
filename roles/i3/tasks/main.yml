@@ -6,6 +6,7 @@
     - i3
     - ranger
     - rofi
+    - dunst
     - gnome-screenshot
     - flameshot
     - light

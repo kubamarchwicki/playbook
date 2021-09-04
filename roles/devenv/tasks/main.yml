@@ -8,7 +8,6 @@
   become: yes
   ## configure vscode settings sync afterwards https://itnext.io/settings-sync-with-vs-code-c3d4f126989
 
-
 - name: "Install kubectl"
   block:
   - name: "kubectl: add Google Cloud public key"
@@ -25,6 +24,24 @@
   - name: "kubectl: install"
     apt:
       name: ['apt-transport-https', 'kubectl']
+      state: latest
+    become: yes
+
+- name: "Install helm"
+  block:
+  - name: "helm: add public key"
+    apt_key: 
+      url: https://baltocdn.com/helm/signing.asc
+    become: yes
+
+  - name: "helm: add APT repository"
+    apt_repository:
+      repo: deb https://baltocdn.com/helm/stable/debian/ all main
+    become: yes
+
+  - name: "helm: install"
+    apt:
+      name: ['apt-transport-https', 'helm']
       state: latest
     become: yes
 
