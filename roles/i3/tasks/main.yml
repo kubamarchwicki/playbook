@@ -62,3 +62,28 @@
       dest: "/etc/udev/rules.d/99-lowbat.rules"
       content: |
         SUBSYSTEM=="power_supply", ATTR{status}=="Discharging", ATTR{capacity}=="[0-15]", RUN+="/usr/bin/su {{ansible_env.USER}} -c /home/{{ansible_env.USER}}/.config/i3/scripts/battery_level"
+
+- name: Dunst notification
+  block:
+  - name: "dunst: setup XDG_DATA_HOME"
+    blockinfile:
+      path: ~/.profile
+      block: |
+        export XDG_DATA_HOME=${XDG_DATA_HOME:="$HOME/.local/share"}
+  - name: "dunst: Create config directories"
+    file: 
+      path: ~/.local/share/dbus-1/services
+      state: directory
+      mode: 0755
+  - name: "dunst: setup notifier"
+    blockinfile:
+      path: ~/.local/share/dbus-1/services/usernotify.service
+      create: yes
+      block: |
+        [D-BUS Service]
+        Name=org.freedesktop.Notifications
+        Exec=/usr/bin/dunst
+  - name: "dunst: remove xfce4-notifyd from autostart"
+    ansible.builtin.file:
+      path: /etc/xdg/autostart/xfce4-notifyd.desktop
+      stare: absent
