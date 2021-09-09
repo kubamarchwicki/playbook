@@ -36,7 +36,12 @@ screen_external() {
 screen_internal() {
 # nvidia drivers
 	# xrandr --dpi 163 --output $SCR_INT --auto --scale 2x2 --brightness 0.65 --output $SCR_EXT --off 
-	xrandr --output $SCR_INT --auto --scale 2x2 --brightness 0.65 --output $SCR_EXT --off 
+	if [ -z "$SCR_EXT" ]
+	then
+		xrandr --auto
+	else
+		xrandr --output $SCR_INT --auto --scale 2x2 --brightness 0.65 --output $SCR_EXT --off 
+	fi
 }
 
 main() {
