@@ -27,6 +27,30 @@
       state: latest
     become: yes
 
+- name: "Install k9s"
+  block:
+  - name: "k9s: setup install folder"
+    file:
+      path: ~/.bin/k9s
+      state: directory
+  - name: "k9s: Get the latest version of k9s"
+    shell: curl -s https://api.github.com/repos/derailed/k9s/releases/latest | grep 'tag_name' | cut -d\" -f4 | cut -c 2-
+    args:
+      warn: False
+    register: latest_k9s_version
+    changed_when: false
+  - name: "k9s: install"
+    ansible.builtin.unarchive:
+      src: https://github.com/derailed/k9s/releases/download/v{{ latest_k9s_version.stdout }}/k9s_Linux_x86_64.tar.gz      
+      dest: ~/.bin/k9s
+      remote_src: yes  
+  - name: "k9s: add to PATH"
+    blockinfile:
+      path: ~/.profile
+      marker: "# {mark} k9s path variable"
+      block: |
+        export PATH=$HOME/.bin/k9s:$PATH
+
 - name: "Install helm"
   block:
   - name: "helm: add public key"

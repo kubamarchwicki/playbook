@@ -68,6 +68,7 @@
   - name: "dunst: setup XDG_DATA_HOME"
     blockinfile:
       path: ~/.profile
+      marker: "# {mark} setup XDG_DATA_HOME"
       block: |
         export XDG_DATA_HOME=${XDG_DATA_HOME:="$HOME/.local/share"}
   - name: "dunst: Create config directories"
@@ -86,4 +87,4 @@
   - name: "dunst: remove xfce4-notifyd from autostart"
     ansible.builtin.file:
       path: /etc/xdg/autostart/xfce4-notifyd.desktop
-      stare: absent
+      state: absent
