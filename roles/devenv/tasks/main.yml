@@ -3,10 +3,24 @@
     name: 
     - direnv
     - code
-    - awscli
     state: latest
   become: yes
   ## configure vscode settings sync afterwards https://itnext.io/settings-sync-with-vs-code-c3d4f126989
+
+- name: "Install aws-cli"
+  block:
+  - name: Download the awscli bundle.
+    get_url: url=https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip dest=/tmp/awscli-install.zip
+    register: aws_cli_download_bundle
+  - name: Unarchive the installer.
+    unarchive: src=/tmp/awscli-install.zip dest=/tmp copy=no 
+    when: aws_cli_download_bundle.changed
+    register: aws_cli_unarchive_installer
+  - name: Install awscli package.
+    shell: /tmp/aws/install -i ~/.bin/aws-cli -b ~/.bin
+    args:
+      creates: /usr/bin/aws
+    when: aws_cli_unarchive_installer.changed      
 
 - name: "Install kubectl"
   block:

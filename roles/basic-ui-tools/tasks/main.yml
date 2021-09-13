@@ -6,6 +6,7 @@
     - firefox
     - chromium-browser
     - nautilus
+    - evince
 
 - name: Install simplenote
   block: 

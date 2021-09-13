@@ -33,6 +33,8 @@
     - acpi
     - bluez
     - blueman
+    - pdftk
+    - system-config-printer
 
 - name: Install passff-host for password store
   block:
