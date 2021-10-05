@@ -11,8 +11,9 @@
 # https://askubuntu.com/questions/704503/scale-2x2-in-xrandr-causes-the-monitor-to-not-display-anything/979551#979551
 
 # SCR_EXT="DP-1"
+# SCR_INT="eDP-1"
 SCR_EXT=`xrandr | egrep '^DP\-.+ connected' | cut -f1 -d ' '`
-SCR_INT="eDP-1"
+SCR_INT=`xrandr | egrep '^eDP\-.+ connected' | cut -f1 -d ' '`
 
 screen_mirror() {
 # nvidia drivers		
