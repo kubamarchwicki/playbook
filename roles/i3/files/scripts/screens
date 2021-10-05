@@ -19,7 +19,7 @@ screen_mirror() {
 # nvidia drivers		
 	# xrandr --dpi 163 --output $SCR_INT --auto --brightness 0.65 --output $SCR_EXT --auto
    screen_internal
-   xrandr --output $SCR_INT --auto --scale 2x2 --brightness 0.65 --output $SCR_EXT --auto
+   xrandr --output $SCR_INT --auto --scale 2x2 --brightness 0.65 --output $SCR_EXT --primary --auto
 }
 
 screen_join() {
@@ -31,7 +31,7 @@ screen_join() {
 screen_external() {
 # nvidia drivers
 	# xrandr --dpi 245 --output $SCR_INT --off --output $SCR_EXT --auto
-   	xrandr --output $SCR_INT --off --output $SCR_EXT --auto
+   	xrandr --output $SCR_INT --off --output $SCR_EXT --primary  --auto
 }
 
 screen_internal() {
@@ -39,9 +39,9 @@ screen_internal() {
 	# xrandr --dpi 163 --output $SCR_INT --auto --scale 2x2 --brightness 0.65 --output $SCR_EXT --off 
 	if [ -z "$SCR_EXT" ]
 	then
-		xrandr --auto
+		xrandr --output $SCR_INT --primary --auto --scale 2x2 --brightness 0.65
 	else
-		xrandr --output $SCR_INT --auto --scale 2x2 --brightness 0.65 --output $SCR_EXT --off 
+		xrandr --output $SCR_INT ---primary -auto --scale 2x2 --brightness 0.65 --output $SCR_EXT --off 
 	fi
 }
 
