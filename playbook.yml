@@ -9,10 +9,10 @@
       package_facts:
         manager: apt
   roles:
-    - i3
     - shell
     - basic-tools
     - basic-ui-tools
+    - regolith
     - devenv    
     - docker  
     - prune    

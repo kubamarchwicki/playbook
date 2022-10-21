@@ -1,0 +1,18 @@
+- name: Install Google endpoint-verification
+  block: 
+  - name: "Google Workspace: add GPG key"
+    apt_key:
+      url: https://apt.releases.hashicorp.com/gpg
+    become: yes
+
+  - name: "Google Workspace: add APT repository"
+    apt_repository:
+      repo: deb [arch=amd64] https://apt.releases.hashicorp.com {{ansible_distribution_release}} main
+    become: yes
+
+  - name: "Vault: install package"
+    apt:
+      name: 
+      - vault
+      state: latest
+    become: yes

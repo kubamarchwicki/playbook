@@ -7,6 +7,10 @@
     - chromium-browser
     - nautilus
     - evince
+    - flameshot
+
+# https://www.darktable.org/about/
+# Install photo editing lightroom opensource edition
 
 - name: Install simplenote
   block: 
@@ -73,17 +77,10 @@
     when: not dropbox_installed.stat.exists
 
 - name: Install slack
-  block: 
-  - name: "Slack: verify if Installed"
-    stat:
-      path: "/usr/bin/slack"
-    register: "slack_installed"
-  
-  - name: "Slack: install package"
-    apt:
-      deb: https://downloads.slack-edge.com/linux_releases/slack-desktop-4.12.2-amd64.deb
-    become: yes
-    when: not slack_installed.stat.exists
+  snap:
+    name: slack
+    classic: yes
+  become: yes
 
 - name: Install Inconsolata font
   block:

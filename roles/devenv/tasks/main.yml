@@ -3,10 +3,15 @@
     name: 
     - direnv
     - jq
-    - code
     state: latest
   become: yes
-  ## configure vscode settings sync afterwards https://itnext.io/settings-sync-with-vs-code-c3d4f126989
+
+- name: Install vscode
+  snap:
+    name: code
+    classic: yes  
+  become: yes
+    ## configure vscode settings sync afterwards https://itnext.io/settings-sync-with-vs-code-c3d4f126989
 
 - name: "Install yq"
   block:
@@ -29,7 +34,7 @@
     when: aws_cli_download_bundle.changed
     register: aws_cli_unarchive_installer
   - name: "awscli: install package."
-    shell: /tmp/aws/install -i ~/.bin/aws-cli -b ~/.bin
+    shell: /tmp/aws/install --update -i ~/.bin/aws-cli -b ~/.bin
     args:
       creates: /usr/bin/aws
     when: aws_cli_unarchive_installer.changed      

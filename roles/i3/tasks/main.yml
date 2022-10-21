@@ -11,7 +11,7 @@
     - flameshot
     - light
     
-- name: Configure i3
+- name: Configure i3fire
   block:
   - name: Create config directories
     file: 

@@ -1,0 +1,51 @@
+- name: Install i3 tools
+  become: yes
+  apt:
+    state: latest
+    name:
+      - rofi
+      - i3lock
+
+- name: Remove unwanted tools
+  become: yes
+  apt:
+    state: absent
+    name:
+      - regolith-i3-ilia
+      - i3xrocks-app-launcher
+      - i3xrocks-info
+      - i3xrocks-next-workspace
+
+- name: Configure regolith
+  block:
+  - name: Create config directories
+    file: 
+      path: "{{ item.path }}"
+      state: directory
+      mode: 0755
+    loop: 
+      - { path: "~/.config/rofi-pass" }
+      - { path: "~/.config/regolith2/scripts" }
+      - { path: "~/.config/regolith2/i3/config.d" }
+  - name: Download rofi-pass
+    get_url:
+      url: "https://raw.githubusercontent.com/carnager/rofi-pass/master/rofi-pass"
+      dest: "~/.config/regolith2/scripts/rofi-pass"
+  - name: Set scripts permissions
+    file:
+      path: "~/.config/regolith2/scripts"
+      state: directory
+      recurse: yes
+      mode: 0755
+  - name: Link configuration files
+    file:
+      src: "{{ item.src }}"
+      dest: "{{ item.dest }}"
+      state: link
+      force: yes
+    loop: 
+      - { src: "~/dotfiles/regolith/config", dest: "~/.config/regolith2/i3/config.d/config"}
+      - { src: "~/dotfiles/regolith/config.rasi", dest: "~/.config/rofi/config.rasi"}
+      - { src: "~/dotfiles/regolith/Xresources", dest: "~/.config/regolith2/Xresources"}
+      - { src: "~/dotfiles/regolith/rofipass.config", dest: "~/.config/rofi-pass/config"}
+

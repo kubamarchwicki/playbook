@@ -15,11 +15,11 @@
     - mc
     - tmux
     - zip
+    - p7zip-full
     - xz-utils
     - gawk
     - sudo
     - bat
-    - xfce4-clipman-plugin
     - youtube-dl
     - screen
     - vim
@@ -32,6 +32,7 @@
     - acpi
     - bluez
     - blueman
+    - cups
     - pdftk
     - system-config-printer
 
