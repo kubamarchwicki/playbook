@@ -12,23 +12,13 @@
 # https://www.darktable.org/about/
 # Install photo editing lightroom opensource edition
 
-- name: Install simplenote
-  block: 
-  - name: Verify if simplenote Is Installed
-    stat:
-      path: "/usr/bin/simplenote"
-    register: "simplenote_installed"
-  - name: Get the latest version of simplenote
-    shell: curl -s https://api.github.com/repos/Automattic/simplenote-electron/releases/latest | grep 'tag_name' | cut -d\" -f4 | cut -c 2-
-    args:
-      warn: False
-    register: latest_simplenote_version
-    changed_when: false
-  - name: Install simplenote
-    apt:
-      deb: https://github.com/Automattic/simplenote-electron/releases/download/v{{ latest_simplenote_version.stdout }}/Simplenote-linux-{{ latest_simplenote_version.stdout }}-amd64.deb
-    become: yes
-    when: not simplenote_installed.stat.exists
+- name: Install snap packages
+  snap:
+    name: 
+     - slack
+     - simplenote
+    classic: yes
+  become: yes
 
 - name: Install Signal
   block:
@@ -75,12 +65,6 @@
     args:
       warn: False    
     when: not dropbox_installed.stat.exists
-
-- name: Install slack
-  snap:
-    name: slack
-    classic: yes
-  become: yes
 
 - name: Install Inconsolata font
   block:

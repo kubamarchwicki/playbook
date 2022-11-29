@@ -26,6 +26,7 @@
       mode: 0755
     loop: 
       - { path: "~/.config/rofi-pass" }
+      - { path: "~/.config/dunst" }
       - { path: "~/.config/regolith2/scripts" }
       - { path: "~/.config/regolith2/i3/config.d" }
   - name: Download rofi-pass
@@ -49,4 +50,5 @@
       - { src: "~/dotfiles/regolith/config.rasi", dest: "~/.config/rofi/config.rasi"}
       - { src: "~/dotfiles/regolith/Xresources", dest: "~/.config/regolith2/Xresources"}
       - { src: "~/dotfiles/regolith/rofipass.config", dest: "~/.config/rofi-pass/config"}
+      - { src: "~/dotfiles/regolith/dunstrc", dest: "~/.config/dunst/dunstrc"}
 
