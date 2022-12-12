@@ -5,6 +5,7 @@
     name:
       - rofi
       - i3lock
+      - dunst
 
 - name: Remove unwanted tools
   become: yes
