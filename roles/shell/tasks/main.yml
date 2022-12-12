@@ -25,6 +25,14 @@
       shell: /usr/bin/zsh
     become: yes
 
+- name: dotfiles folders
+  file: 
+    path: "{{ item.path }}"
+    state: directory
+    mode: 0755
+  loop: 
+    - { path: "~/.config/xfce4/terminal" }
+
 - name: Link dotfiles
   file:
     src: "{{ item.src }}"

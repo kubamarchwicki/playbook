@@ -26,6 +26,7 @@
       mode: 0755
     loop: 
       - { path: "~/.config/rofi-pass" }
+      - { path: "~/.config/rofi" }
       - { path: "~/.config/dunst" }
       - { path: "~/.config/regolith2/scripts" }
       - { path: "~/.config/regolith2/i3/config.d" }

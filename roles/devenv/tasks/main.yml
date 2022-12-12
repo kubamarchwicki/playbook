@@ -6,6 +6,14 @@
     state: latest
   become: yes
 
+- name: Create local ~/.bin folder
+  file: 
+    path: "{{ item.path }}"
+    state: directory
+    mode: 0755
+  loop: 
+    - { path: "~/.bin" }
+
 - name: Install vscode
   snap:
     name: code
