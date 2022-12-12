@@ -13,6 +13,7 @@
     name:
       - regolith-i3-ilia
       - regolith-i3-gnome
+      - regolith-i3-session
       - i3xrocks-app-launcher
       - i3xrocks-info
       - i3xrocks-next-workspace
