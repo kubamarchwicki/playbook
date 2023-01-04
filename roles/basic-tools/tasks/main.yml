@@ -35,6 +35,12 @@
     - cups
     - pdftk
     - system-config-printer
+    - pavucontrol
+
+## Airpods configuration
+## https://askubuntu.com/questions/1408647/unable-to-pair-airpods-pro-with-ubuntu-22-04
+##  ControllerMode = bredr in  /etc/bluetooth/main.conf
+##  restart: sudo service bluetooth restart
 
 - name: Install passff-host for password store
   block:
