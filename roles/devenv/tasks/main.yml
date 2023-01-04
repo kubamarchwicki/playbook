@@ -32,6 +32,7 @@
   - name: "yq: download"
     get_url: url=https://github.com/mikefarah/yq/releases/download/v{{ latest_yq_version.stdout }}/yq_linux_amd64 dest=~/.bin/yq mode=0755
 
+# AWS
 - name: "Install aws-cli"
   block:
   - name: "awscli: download the awscli bundle."
@@ -46,6 +47,25 @@
     args:
       creates: /usr/bin/aws
     when: aws_cli_unarchive_installer.changed      
+
+# Easy assume role for AWS
+- name: "Install rapture"
+  block:
+  - name: "rapture: Get the latest version of rapture"
+    shell: curl -s https://api.github.com/repos/daveadams/go-rapture/releases/latest | grep 'tag_name' | cut -d\" -f4 | cut -c 2-
+    args:
+      warn: False
+    register: latest_rapture_version
+    changed_when: false
+  - name: "rapture: download"
+    get_url: url=https://github.com/daveadams/go-rapture/releases/download/v{{ latest_rapture_version.stdout }}/rapture-linux-amd64 dest=~/.bin/rapture mode=0755
+  - name: "rapture: add to .zshrc"
+    lineinfile:
+      dest: ~/.zshrc
+      regexp: 'rapture'
+      line: '[[ -s "$HOME/.bin/rapture" ]] && eval "$( command rapture shell-init )"'
+      state: present
+
 
 - name: "Install kubectl"
   block:
