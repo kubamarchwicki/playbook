@@ -40,6 +40,7 @@
     - pavucontrol
     - pulseaudio-module-bluetooth
     - firmware-sof-signed
+    - imagemagick
 
 ## Airpods configuration
 ## https://askubuntu.com/questions/1408647/unable-to-pair-airpods-pro-with-ubuntu-22-04
