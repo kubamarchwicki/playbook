@@ -3,10 +3,10 @@
   - name: Kernel mainline ppa
     apt_repository:
       repo: ppa:cappelikan/ppa
-    become: yes
+    become: true
 
 - name: Install basic tools
-  become: yes
+  become: true
   apt:
     state: latest
     name:

@@ -1,5 +1,5 @@
 - name: Install default packages
-  become: yes
+  become: true
   apt:
     state: latest
     name:
@@ -23,7 +23,7 @@
     user:
       name: "{{ ansible_env.USER }}"
       shell: /usr/bin/zsh
-    become: yes
+    become: true
 
 - name: dotfiles folders
   file: 

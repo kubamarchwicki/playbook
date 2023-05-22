@@ -4,7 +4,7 @@
     - direnv
     - jq
     state: latest
-  become: yes
+  become: true
 
 - name: Create local ~/.bin folder
   file: 
@@ -18,7 +18,7 @@
   snap:
     name: code
     classic: yes  
-  become: yes
+  become: true
     ## configure vscode settings sync afterwards https://itnext.io/settings-sync-with-vs-code-c3d4f126989
 
 - name: "Install yq"
@@ -73,18 +73,18 @@
     apt_key: 
       url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
       keyring: /etc/apt/trusted.gpg.d/cloud.google.gpg
-    become: yes
+    become: true
 
   - name: "kubectl: add APT repository"
     apt_repository:
       repo: deb [signed-by=/etc/apt/trusted.gpg.d/cloud.google.gpg] https://apt.kubernetes.io/ kubernetes-xenial main
-    become: yes
+    become: true
 
   - name: "kubectl: install"
     apt:
       name: ['apt-transport-https', 'kubectl']
       state: latest
-    become: yes
+    become: true
 
 - name: "Install k9s"
   block:
@@ -115,18 +115,18 @@
   - name: "helm: add public key"
     apt_key: 
       url: https://baltocdn.com/helm/signing.asc
-    become: yes
+    become: true
 
   - name: "helm: add APT repository"
     apt_repository:
       repo: deb https://baltocdn.com/helm/stable/debian/ all main
-    become: yes
+    become: true
 
   - name: "helm: install"
     apt:
       name: ['apt-transport-https', 'helm']
       state: latest
-    become: yes
+    become: true
 
 
 - name: "Install gcloud"
@@ -135,18 +135,18 @@
     apt_key: 
       url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
       keyring: /etc/apt/trusted.gpg.d/cloud.google.gpg
-    become: yes
+    become: true
 
   - name: "gcloud: add APT repository"
     apt_repository:
       repo: deb [signed-by=/etc/apt/trusted.gpg.d/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main
-    become: yes
+    become: true
 
   - name: "gcloud: install sdk"
     apt:
       name: ['apt-transport-https', 'ca-certificates', 'gnupg', 'google-cloud-sdk']
       state: latest
-    become: yes
+    become: true
 
 - name: Install SDKMAN
   block:
@@ -197,7 +197,7 @@
   - name: Install Git Delta {{ latest_git_delta_version.stdout }}
     apt:
       deb: https://github.com/dandavison/delta/releases/download/{{ latest_git_delta_version.stdout }}/git-delta_{{ latest_git_delta_version.stdout }}_amd64.deb
-    become: yes
+    become: true
     when: local_git_delta_version.stdout != latest_git_delta_version.stdout
 
   - name: Setup git delta
@@ -215,7 +215,7 @@
       - { name: "delta.decorations.file-decoration-style", value: "none" }
 
 - name: Install VPN packages
-  become: yes
+  become: true
   apt:
     state: latest
     name:
@@ -227,16 +227,16 @@
   - name: "Vault: add GPG key"
     apt_key:
       url: https://apt.releases.hashicorp.com/gpg
-    become: yes
+    become: true
 
   - name: "Vault: add APT repository"
     apt_repository:
       repo: deb [arch=amd64] https://apt.releases.hashicorp.com {{ansible_distribution_release}} main
-    become: yes
+    become: true
 
   - name: "Vault: install package"
     apt:
       name: 
       - vault
       state: latest
-    become: yes
+    become: true

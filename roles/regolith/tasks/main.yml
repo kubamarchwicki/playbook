@@ -1,5 +1,5 @@
 - name: Install i3 tools
-  become: yes
+  become: true
   apt:
     state: latest
     name:
@@ -8,7 +8,7 @@
       - dunst
 
 - name: Remove unwanted tools
-  become: yes
+  become: true
   apt:
     state: absent
     name:

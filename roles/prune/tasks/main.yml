@@ -1,5 +1,5 @@
 - name: Remove unwanted packages
-  become: yes
+  become: true
   apt:
     state: absent
     name:

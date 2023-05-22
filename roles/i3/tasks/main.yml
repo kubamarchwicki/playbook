@@ -1,5 +1,5 @@
 - name: Install i3 tools
-  become: yes
+  become: true
   apt:
     state: latest
     name:
@@ -50,14 +50,14 @@
       - { src: "~/dotfiles/i3/dunstrc", dest: "~/.config/dunst/dunstrc"}
 
   - name: Configure lid events
-    become: yes  
+    become: true  
     copy:
       dest: "/etc/acpi/events/lm_lid"
       content: |
         event=button/lid.*
         action=/home/{{ansible_env.USER}}/.config/i3/scripts/lid
   - name: Battery notification
-    become: yes
+    become: true
     copy:
       dest: "/etc/udev/rules.d/99-lowbat.rules"
       content: |
